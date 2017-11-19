@@ -1,0 +1,27 @@
+.panel {
+    width: 100%;
+    background-color: tomato;
+}
+input {
+    border: none;
+    height: 20px;
+    margin: 5px;
+}
+.button {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    border: none;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.plus {
+    background-color: lightgreen;
+}
+.minus{
+    background-color: lightcoral
+}
