@@ -9,6 +9,29 @@
 //       именно div.input-group>input:text+button{-}. То есть коробка с инпутом и кнопкой.
 //     - При нажатии на кнопку «-» должен удаляться родительский для нее div.input-group, таким 
 //       образом удаляя input и button.
+
+
+// Шаг #2
+//     - Внизу панели расположите textarea и кнопку «собрать», по нажатию которой текст из 
+//       элементов input будет выведен в textarea.
+//     - Текст из разных инпутов должен быть разделен строчной конструкцией --&&--.
+
+
+//  Шаг #3
+
+//     - Добавьте группу из трех input[type= "radio"] и тегов label для них. 
+//     - В label первого укажите« Все», второго—« Четные», третьего—« Нечетные». 
+//     - В зависимости от выбранной опции, информация считывается соответственно из четных, нечетных или всех input на странице. 
+//     - По умолчанию выбран первый radio button.
+
+//  Шаг #4
+
+//     - Добавьте проверку на пустые input.
+//     - Пустой input подсвечивается красным цветом (outline) и появляется обычный alert 
+//       уведомляющий о том, что не все input заполнены.
+//     - Если не все input заполнены, то в textarea ничего не должно выводится.
+
+
 const addInputGroup = function () {
     let panel = document.querySelector('.panel');
     let resultArea = document.querySelector('.resultText');
@@ -37,17 +60,14 @@ const delInputGroup = function () {
 let plusButton = document.querySelector('.button.plus');
 plusButton.addEventListener('click', addInputGroup);
 
-// Шаг #2
-//     - Внизу панели расположите textarea и кнопку «собрать», по нажатию которой текст из 
-//       элементов input будет выведен в textarea.
-//     - Текст из разных инпутов должен быть разделен строчной конструкцией --&&--.
+
 
 const collectInputs = function () {
-    let inputsValue = document.querySelectorAll('.panel input[type=text]');
+    let inputsValue = document.querySelectorAll('.panel input[type=text]'); /// Выбираем нужные элементы 
     let textArea = document.querySelector('textarea');
     let radioBox = document.querySelectorAll('.panel input[type=radio]');
 
-    let index = 0;
+    let index = 0;                                                         /// определяем активную радиокнопку
     radioBox.forEach((radio, i) => {
         if (radio.checked) {
             index = i;
@@ -55,10 +75,20 @@ const collectInputs = function () {
     })
 
     let inputs = []
-    for (let i = 0; i < inputsValue.length; i++) {
-        inputs[i] = inputsValue[i].value
+    let emptyField = 0;
+    for (let i = 0; i < inputsValue.length; i++) {                          ///Собираем значения инпутов и определяем пустые        
+        inputs[i] = inputsValue[i].value;
+        inputsValue[i].classList.remove('alert');
+        if (!inputs[i]) {
+            inputsValue[i].classList.add('alert');
+            emptyField++;
+        }        
     }
-
+    if (emptyField) {
+        alert('Не должно быть пустых ячеек');
+        return;
+    }
+    
     switch (index) {
         case 1:
             inputs = inputs.filter((x, i) => {
@@ -82,9 +112,3 @@ const collectInputs = function () {
 let collectButton = document.querySelector('.button.collect');
 collectButton.addEventListener('click', collectInputs);
 
-//  Шаг #3
-
-//     - Добавьте группу из трех input[type= "radio"] и тегов label для них. 
-//     - В label первого укажите« Все», второго—« Четные», третьего—« Нечетные». 
-//     - В зависимости от выбранной опции, информация считывается соответственно из четных, нечетных или всех input на странице. 
-//     - По умолчанию выбран первый radio button.
