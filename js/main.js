@@ -89,7 +89,7 @@ const collectInputs = function () {
         return;
     }
     
-    switch (index) {
+    switch (index) {                                            ///фильтруем вывод
         case 1:
             inputs = inputs.filter((x, i) => {
                 return i % 2 == 1
