@@ -67,7 +67,7 @@ const collectInputs = function () {
     let textArea = document.querySelector('textarea');
     let radioBox = document.querySelectorAll('.panel input[type=radio]');
 
-    let index = 0;                                                         /// определяем активную радиокнопку
+    let index = 0; /// определяем активную радиокнопку
     radioBox.forEach((radio, i) => {
         if (radio.checked) {
             index = i;
@@ -76,20 +76,20 @@ const collectInputs = function () {
 
     let inputs = []
     let emptyField = 0;
-    for (let i = 0; i < inputsValue.length; i++) {                          ///Собираем значения инпутов и определяем пустые        
+    for (let i = 0; i < inputsValue.length; i++) { ///Собираем значения инпутов и определяем пустые        
         inputs[i] = inputsValue[i].value;
         inputsValue[i].classList.remove('alert');
         if (!inputs[i]) {
             inputsValue[i].classList.add('alert');
             emptyField++;
-        }        
+        }
     }
     if (emptyField) {
         alert('Не должно быть пустых ячеек');
         return;
     }
-    
-    switch (index) {                                            ///фильтруем вывод
+
+    switch (index) { ///фильтруем вывод
         case 1:
             inputs = inputs.filter((x, i) => {
                 return i % 2 == 1
@@ -100,9 +100,11 @@ const collectInputs = function () {
                 return i % 2 == 0
             });
             break;
-    
+
         default:
-            inputs = inputs.filter(()=>{return true;})
+            inputs = inputs.filter(() => {
+                return true;
+            })
             break;
     }
     let result = inputs.join("--&&--");
@@ -112,3 +114,35 @@ const collectInputs = function () {
 let collectButton = document.querySelector('.button.collect');
 collectButton.addEventListener('click', collectInputs);
 
+
+// task2
+
+
+//     - Дан список из элементов. Реализуйте скрипт, который отслеживает клик на элементе списка 
+//       и подсвечивает его красным цветом.
+//     - При повторном клике, цвет убирается.
+//     - Добавьте input, который позволяет добавлять элементы в список. На них также, 
+//      распостраняется событие click.
+
+const changeColor = function () {
+    this.classList.toggle('selected');
+}
+const addElem = function () {
+
+    let inpNewElem = document.querySelector('.task2 .newElement');
+    let newElement = document.createElement('p');
+    newElement.innerHTML = inpNewElem.value;
+    if (inpNewElem.value) {
+        newElement.classList.add('element');
+        container.insertBefore(newElement, inpNewElem);
+        newElement.addEventListener('click', changeColor);
+    }
+}
+
+let container = document.querySelector('.task2');
+let btnAddNewElem = document.querySelector('.task2 .addNewElement');
+btnAddNewElem.addEventListener('click', addElem);
+let elements = document.querySelectorAll('.task2 .element');
+elements.forEach(function (elem) {
+    elem.addEventListener('click', changeColor);
+})
