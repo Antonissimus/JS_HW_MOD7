@@ -43,12 +43,37 @@ plusButton.addEventListener('click', addInputGroup);
 //     - Текст из разных инпутов должен быть разделен строчной конструкцией --&&--.
 
 const collectInputs = function () {
-    let inputsValue = document.querySelectorAll('.panel input');
+    let inputsValue = document.querySelectorAll('.panel input[type=text]');
     let textArea = document.querySelector('textarea');
+    let radioBox = document.querySelectorAll('.panel input[type=radio]');
+
+    let index = 0;
+    radioBox.forEach((radio, i) => {
+        if (radio.checked) {
+            index = i;
+        }
+    })
 
     let inputs = []
     for (let i = 0; i < inputsValue.length; i++) {
         inputs[i] = inputsValue[i].value
+    }
+
+    switch (index) {
+        case 1:
+            inputs = inputs.filter((x, i) => {
+                return i % 2 == 1
+            });
+            break;
+        case 2:
+            inputs = inputs.filter((x, i) => {
+                return i % 2 == 0
+            });
+            break;
+    
+        default:
+            inputs = inputs.filter(()=>{return true;})
+            break;
     }
     let result = inputs.join("--&&--");
     textArea.innerHTML = result;
@@ -56,3 +81,10 @@ const collectInputs = function () {
 
 let collectButton = document.querySelector('.button.collect');
 collectButton.addEventListener('click', collectInputs);
+
+//  Шаг #3
+
+//     - Добавьте группу из трех input[type= "radio"] и тегов label для них. 
+//     - В label первого укажите« Все», второго—« Четные», третьего—« Нечетные». 
+//     - В зависимости от выбранной опции, информация считывается соответственно из четных, нечетных или всех input на странице. 
+//     - По умолчанию выбран первый radio button.
